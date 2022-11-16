@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ECommerce.Api.Search.Models
+namespace ECommerce.Api.Orders.Models
 {
     public class OrderItem
     {

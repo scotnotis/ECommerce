@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace ECommerce.Api.Orders.Models
+namespace ECommerce.Api.Orders.Db
 {
     public class Order
     {
@@ -14,6 +12,6 @@ namespace ECommerce.Api.Orders.Models
 
         public decimal Total { get; set; }
 
-        public List<OrderItem> Items { get; set; }
+        public List<OrderItem> Items { get; set; } // = new List<OrderItem>();
     }
 }
