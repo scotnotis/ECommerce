@@ -1,6 +1,4 @@
 ﻿using ECommerce.Api.Search.Interfaces;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -10,33 +8,42 @@ namespace ECommerce.Api.Search.Services
     {
         private readonly IOrdersService ordersService;
         private readonly IProductsService productsService;
+        private readonly ICustomersService customersService;
 
-        public SearchService(IOrdersService ordersService, IProductsService productsService)
+        public SearchService(IOrdersService ordersService, IProductsService productsService, ICustomersService customersService)
         {
             this.ordersService = ordersService;
             this.productsService = productsService;
+            this.customersService = customersService;
         }
         public async Task<(bool IsSuccess, dynamic SearchResults)> SearchAsync(int customerId)
         {
+            var customersResult = await customersService.GetCustomersAsync(customerId);
             var ordersResult = await ordersService.GetOrdersAsync(customerId);
             var productsResult = await productsService.GetProductsAsync();
 
-            if(ordersResult.IsSuccess)
+            if (ordersResult.IsSuccess)
             {
-                foreach(var order in ordersResult.Orders)
+
+                foreach (var order in ordersResult.Orders)
                     foreach (var item in order.Items)
                     {
-                        item.ProductName = productsResult.Products.FirstOrDefault(p => p.Id == item.Id)?.Name;
+                        item.ProductName = productsResult.IsSuccess ?
+                                        productsResult.Products.FirstOrDefault(p => p.Id == item.Id)?.Name :
+                                        "Product Information is not available";
                     }
 
                 var result = new
                 {
+                    Customer = customersResult.IsSuccess ? 
+                                customersResult.Customer : 
+                                new { Name = "Customer information is not available"}, 
                     Orders = ordersResult.Orders
                 };
 
                 return (true, result);
             }
             return (false, null);
-        } 
+        }
     }
 }

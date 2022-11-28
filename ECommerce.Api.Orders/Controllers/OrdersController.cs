@@ -33,7 +33,7 @@ namespace ECommerce.Api.Orders.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetOrderAsync(int id)
         {
-            var result = await ordersProvider.GetOrderAsync(id);
+            var result = await ordersProvider.GetOrdersAsync(id);
             if (result.IsSuccess)
             {
                 return Ok(result.Order);

@@ -9,6 +9,8 @@ namespace ECommerce.Api.Orders.Interfaces
     {
         Task<(bool IsSuccess, IEnumerable<Models.Order> Orders, string ErrorMessage)> GetOrdersAsync();
 
-        Task<(bool IsSuccess, Models.Order Order, string ErrorMessage)> GetOrderAsync(int id);
+        //Note: GetOrdersAsync(int customerId) methods returns a list of Orders for the provided customerId. 
+        //It does not return an order for the provided id. 
+        Task<(bool IsSuccess, IEnumerable<Models.Order> Order, string ErrorMessage)> GetOrdersAsync(int customerId);
     }
 }

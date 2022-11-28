@@ -42,22 +42,23 @@ namespace ECommerce.Api.Orders.Providers
                     new Db.OrderItem { Id = 4, OrderId = 2, ProductId = 4, Quantity = 6, UnitPrice = 200 }
                 };
 
-                dbContext.Orders.Add(new Db.Order { Id = 1, CustomerId = 1, OrderDate = DateTime.Now, Items = orderItem1 });
-                dbContext.Orders.Add(new Db.Order { Id = 2, CustomerId = 4, OrderDate = DateTime.Now, Items = orderItem2 });
+                dbContext.Orders.Add(new Db.Order { Id = 1, CustomerId = 1, Total = 190, OrderDate = DateTime.Now, Items = orderItem1 });
+                dbContext.Orders.Add(new Db.Order { Id = 2, CustomerId = 2, Total = 1255, OrderDate = DateTime.Now, Items = orderItem2 });
 
                 dbContext.SaveChanges();
             }
         }
 
-        public async Task<(bool IsSuccess, Models.Order Order, string ErrorMessage)> GetOrderAsync(int id)
+        public async Task<(bool IsSuccess, IEnumerable<Models.Order> Order, string ErrorMessage)> GetOrdersAsync(int customerId)
         {
             try
             {
-                var order = await dbContext.Orders.FirstOrDefaultAsync(p => p.Id == id);
+                //change to match Customer ID
+                var order = await dbContext.Orders.Where(p => p.CustomerId == customerId).ToListAsync();
 
                 if (order != null)
                 {
-                    var result = mapper.Map<Db.Order, Models.Order>(order);
+                    var result = mapper.Map<IEnumerable<Db.Order>, IEnumerable<Models.Order>>(order);
 
                     return (true, result, null);
                 }

@@ -26,6 +26,7 @@ namespace ECommerce.Api.Search.Services
             {
                 var client = httpClientFactory.CreateClient("OrdersService");
                 var response = await client.GetAsync($"api/orders/{customerId}");
+
                 if(response.IsSuccessStatusCode)
                 {
                     var content = await response.Content.ReadAsByteArrayAsync(); 

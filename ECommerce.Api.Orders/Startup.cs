@@ -25,7 +25,7 @@ namespace ECommerce.Api.Orders
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
+        // The ConfigureServices method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped<IOrdersProvider, OrdersProvider>();
@@ -34,9 +34,12 @@ namespace ECommerce.Api.Orders
             services.AddDbContext<OrdersDbContext>(options =>
             {
                 options.UseInMemoryDatabase("Orders"); 
-                options.UseInMemoryDatabase("OrderItems");      //maybe? 
             }, 
             ServiceLifetime.Singleton);
+            // Set service to Singleton in order to keep an instance of the generated data always available in memory. 
+            // In the Singleton pattern, a class has only one instance in the program that provides a global point of access to it.
+            // In other words, a singleton is a class that allows only a single instance of itself to be created 
+            // and usually gives simple access to that instance.
 
             services.AddControllers();
         }
