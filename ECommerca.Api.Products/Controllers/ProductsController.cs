@@ -5,6 +5,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
+/* 
+ * Claudiu's version 
+ */
+
 namespace ECommerca.Api.Products.Controllers
 {
     //Public facing API
