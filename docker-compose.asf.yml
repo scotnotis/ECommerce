@@ -2,12 +2,14 @@ version: '3.4'
 
 services:
   products:
+    image: claudiuscot/ecommercaapiproducts:latest
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
     ports:
       - "80/http"
 
   customers:
+    image: claudiuscot/ecommerceapicustomers:latest
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
     ports:
@@ -15,6 +17,7 @@ services:
 
 
   orders:
+    image: claudiuscot/ecommerceapiorders:latest
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
     ports:
@@ -22,6 +25,7 @@ services:
 
 
   search:
+    image: claudiuscot/ecommerceapisearch:latest
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - Services__Products=http://10.0.0.4:19081/ecommercescotnotis/products/
